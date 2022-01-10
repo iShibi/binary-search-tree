@@ -1,0 +1,30 @@
+{
+  "name": "@ishibi/binary-search-tree",
+  "version": "0.0.0",
+  "description": "An implementation of Binary Search Tree using TypeScript",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "author": {
+    "name": "Shubham Parihar",
+    "email": "shubhamparihar391@gmail.com",
+    "url": "https://github.com/iShibi"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iShibi/binary-search-tree.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iShibi/binary-search-tree/issues"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/iShibi/binary-search-tree#readme"
+}
