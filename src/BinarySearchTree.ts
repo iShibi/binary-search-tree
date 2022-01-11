@@ -6,8 +6,14 @@ export class BinarySearchTree<V> {
    */
   #rootNode: Node<V> | null;
 
+  /**
+   * The number of nodes in the Binary Search Tree
+   */
+  size: number;
+
   constructor() {
     this.#rootNode = null;
+    this.size = 0;
   }
 
   /**
@@ -36,6 +42,7 @@ export class BinarySearchTree<V> {
   */
   insert(key: number, value?: V) {
     const newNode = new Node(key, value);
+    this.size++;
     if (this.#rootNode === null) {
       this.#rootNode = newNode;
       return this;
@@ -62,5 +69,69 @@ export class BinarySearchTree<V> {
     return this;
   }
 
+   /**
+    * Returns an array of node keys
+    * @param traversal The type of traversal to use
+    * @default 'inorder'
+    */
+  keys(traversal: TraversalType = 'inorder') {
+    const keys: Array<number> = [];
+    if (traversal === 'inorder') {
+      this.#inorderTraversal(keys, this.#rootNode, 'key');
+    }
+    // TODO: implement other traversal methods
+    return keys;
+  }
+
+  /**
+   * Returns an array of node values
+   * @param traversal The type of traversal to use
+   * @default 'inorder'
+   */
+  values(traversal: TraversalType = 'inorder') {
+    const values: Array<V | undefined> = [];
+    if (traversal === 'inorder') {
+      this.#inorderTraversal(values, this.#rootNode, 'value');
+    }
+    return values;
+  }
+
+  /**
+   * Returns an array of `[key, value]` pairs for each node
+   * @param traversal The type of traversal to use
+   * @default 'inorder'
+   */
+  entries(traversal: TraversalType = 'inorder') {
+    const keyValuePairs: Array<KeyValueTuple<V>> = [];
+    if (traversal === 'inorder') {
+      this.#inorderTraversal(keyValuePairs, this.#rootNode, 'entry');
+    }
+    return keyValuePairs;
+  }
+
+  #inorderTraversal(store: Array<V | undefined | number | KeyValueTuple<V>>, currentNode: Node<V> | null, storeType: 'key' | 'value' | 'entry') {
+    if (currentNode !== null) {
+      this.#inorderTraversal(store, currentNode._leftChildNode, storeType);
+      switch (storeType) {
+        case 'key':
+          store.push(currentNode.key);
+          break;
+        case 'value':
+          store.push(currentNode.value);
+          break;
+        case 'entry':
+          store.push([currentNode.key, currentNode.value]);
+          break;
+        default:
+          break;
+      }
+      this.#inorderTraversal(store, currentNode._rightChildNode, storeType);
+    }
+  }
+
   // TODO: implement delete method
 }
+
+export type TraversalType = 'inorder' | 'preorder' | 'postorder';
+
+export type KeyValueTuple<V> = [number, V | undefined];
